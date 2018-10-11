@@ -17,18 +17,25 @@ public class Customer {
 		double number;
 		String name;
 		String BestCustomer;
+		System.out.print("Please Enter cost  (or Enter -1 to exit):");
 		Scanner scan=new Scanner(System.in);
 		ArrayList<Double> sales=new ArrayList();
 		ArrayList<String> customers=new ArrayList();
-
-		while(Inter(number=scan.nextDouble())>0){
-			sales.add(number);
-			name=scan.next();
-			customers.add(name);
+		if ((number = scan.nextDouble())<=0)
+			return;
+		else {
+			while (Inter(number) > 0) {
+				sales.add(number);
+				System.out.print("Please Enter the name of customer :");
+				name = scan.next();
+				customers.add(name);
+				System.out.print("Please Enter cost :(or Enter -1 to exit)");
+				number = scan.nextDouble();
+			}
+			System.out.print(sales);
+			BestCustomer = SearchBestCustomer(sales, customers);
+			System.out.print("BestCustomer：" + BestCustomer);
 		}
-		System.out.print(sales);
-		BestCustomer=SearchBestCustomer(sales,customers);
-		System.out.print("BestCustomer："+BestCustomer);
 	}
 	private static int Inter(double d) {
 		return (new Double(d)).intValue();
