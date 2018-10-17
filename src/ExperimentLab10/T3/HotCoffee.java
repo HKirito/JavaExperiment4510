@@ -7,14 +7,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
-public class HotCoffee extends JFrame implements ChangeListener{
+public class HotCoffee extends JFrame {
     private JFrame jFrame;
     private JPanel panel;
-    private JTextArea jTextArea;
     private JSlider jSlider;
     private JButton jButton;
     private JScrollPane jScrollPane;
-    private JTextField jTextField;
 
     public static void main(String[] args){
         HotCoffee hot = new HotCoffee();
@@ -22,7 +20,7 @@ public class HotCoffee extends JFrame implements ChangeListener{
     public HotCoffee(){
 
         jFrame = new JFrame();
-        jTextField = new JTextField(20);
+
         panel = new JPanel();
         jScrollPane = new JScrollPane();
         jButton = new JButton("Check");
@@ -37,26 +35,27 @@ public class HotCoffee extends JFrame implements ChangeListener{
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setTitle("Hot Coffee");
         jFrame.setSize(700,600);
-            panel.add(jTextField);
             panel.add(jButton);
         jFrame.setLocation(100,300);
         jFrame.add(jSlider);
         jFrame.add(panel, BorderLayout.SOUTH);
         jFrame.setVisible(true);
-
-        jSlider.addChangeListener(this);
+        jButton.addActionListener(x -> stateChanged());
     }
 
-    public void stateChanged(ChangeEvent event){
-        JSlider source = (JSlider) event.getSource();
+    public void stateChanged(){
         try{
             check();
+            JOptionPane.showMessageDialog(null,"温度适合","提示",JOptionPane.WARNING_MESSAGE);
         }catch (TooHotException hot){
             hot.printStackTrace();
+            JOptionPane.showMessageDialog(null,"过烫","提示",JOptionPane.WARNING_MESSAGE);
         }catch (TooColdException cold){
-            cold.printStackTrace();
+            JOptionPane.showMessageDialog(null,"过冷","提示",JOptionPane.WARNING_MESSAGE);
         }
     }
+
+
     public void check() throws TooColdException,TooHotException{
 
         if (jSlider.getValue()<190){
